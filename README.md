@@ -23,3 +23,4 @@ liquibase changelog-sync-sql --label-filter=1.111
 liquibase update
 liquibase tag --tag=v1.0.0
 
+
