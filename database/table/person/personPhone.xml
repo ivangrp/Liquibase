@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-8">
+        <createTable remarks="Telephone number and type of a person." tableName="PersonPhone">
+            <column computed="false" name="BusinessEntityID" remarks="Business entity identification number. Foreign key to Person.BusinessEntityID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID"/>
+            </column>
+            <column computed="false" name="PhoneNumber" remarks="Telephone number identification number." type="Phone">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID"/>
+            </column>
+            <column computed="false" name="PhoneNumberTypeID" remarks="Kind of phone number. Foreign key to PhoneNumberType.PhoneNumberTypeID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_PersonPhone_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-32">
+        <addForeignKeyConstraint baseColumnNames="BusinessEntityID" baseTableName="PersonPhone" constraintName="FK_PersonPhone_Person_BusinessEntityID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="BusinessEntityID" referencedTableName="Person" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-33">
+        <createIndex indexName="IX_PersonPhone_PhoneNumber" tableName="PersonPhone">
+            <column name="PhoneNumber"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-51">
+        <addForeignKeyConstraint baseColumnNames="PhoneNumberTypeID" baseTableName="PersonPhone" constraintName="FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="PhoneNumberTypeID" referencedTableName="PhoneNumberType" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

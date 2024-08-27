@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-2">
+        <createTable remarks="Lookup table containing the types of business entity contacts." tableName="ContactType">
+            <column autoIncrement="true" computed="false" name="ContactTypeID" remarks="Primary key for ContactType records." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ContactType_ContactTypeID"/>
+            </column>
+            <column computed="false" name="Name" remarks="Contact type description." type="Name">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_ContactType_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-17">
+        <createIndex indexName="AK_ContactType_Name" tableName="ContactType" unique="true">
+            <column name="Name"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

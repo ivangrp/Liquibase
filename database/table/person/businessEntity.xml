@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-12">
+        <createTable remarks="Source of the ID that connects vendors, customers, and employees with address and contact information." tableName="BusinessEntity">
+            <column autoIncrement="true" computed="false" name="BusinessEntityID" remarks="Primary key for all customers, vendors, and employees." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BusinessEntity_BusinessEntityID"/>
+            </column>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_BusinessEntity_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_BusinessEntity_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-41">
+        <createIndex indexName="AK_BusinessEntity_rowguid" tableName="BusinessEntity" unique="true">
+            <column defaultValueComputed="newid()" defaultValueConstraintName="DF_BusinessEntity_rowguid" name="rowguid"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

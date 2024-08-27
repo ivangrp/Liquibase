@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-4">
+        <createTable remarks="Street address information for customers, employees, and vendors." tableName="Address">
+            <column autoIncrement="true" computed="false" name="AddressID" remarks="Primary key for Address records." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Address_AddressID"/>
+            </column>
+            <column computed="false" name="AddressLine1" remarks="First street address line." type="nvarchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="AddressLine2" remarks="Second street address line." type="nvarchar(60)"/>
+            <column computed="false" name="City" remarks="Name of the city." type="nvarchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="StateProvinceID" remarks="Unique identification number for the state or province. Foreign key to StateProvince table." type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="PostalCode" remarks="Postal code for the street address." type="nvarchar(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_Address_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_Address_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-21">
+        <createIndex indexName="AK_Address_rowguid" tableName="Address" unique="true">
+            <column defaultValueComputed="newid()" defaultValueConstraintName="DF_Address_rowguid" name="rowguid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-22">
+        <createIndex indexName="IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode" tableName="Address" unique="true">
+            <column name="AddressLine1"/>
+            <column name="AddressLine2"/>
+            <column name="City"/>
+            <column name="StateProvinceID"/>
+            <column name="PostalCode"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-23">
+        <createIndex indexName="IX_Address_StateProvinceID" tableName="Address">
+            <column name="StateProvinceID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-47">
+        <addForeignKeyConstraint baseColumnNames="StateProvinceID" baseTableName="Address" constraintName="FK_Address_StateProvince_StateProvinceID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="StateProvinceID" referencedTableName="StateProvince" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

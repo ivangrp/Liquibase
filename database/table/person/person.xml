@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-3">
+        <createTable remarks="Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts." tableName="Person">
+            <column computed="false" name="BusinessEntityID" remarks="Primary key for Person records." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Person_BusinessEntityID"/>
+            </column>
+            <column computed="false" name="PersonType" remarks="Primary type of person: SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact" type="nchar(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="0" defaultValueConstraintName="DF_Person_NameStyle" name="NameStyle" remarks="0 = The data in FirstName and LastName are stored in western style (first name, last name) order.  1 = Eastern style (last name, first name) order." type="NameStyle(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Title" remarks="A courtesy title. For example, Mr. or Ms." type="nvarchar(8)"/>
+            <column computed="false" name="FirstName" remarks="First name of the person." type="Name">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="MiddleName" remarks="Middle name or middle initial of the person." type="Name"/>
+            <column computed="false" name="LastName" remarks="Last name of the person." type="Name">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Suffix" remarks="Surname suffix. For example, Sr. or Jr." type="nvarchar(10)"/>
+            <column computed="false" defaultValueConstraintName="DF_Person_EmailPromotion" defaultValueNumeric="0" name="EmailPromotion" remarks="0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners." type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="AdditionalContactInfo" remarks="Additional contact information about the person stored in xml format." type="xml"/>
+            <column computed="false" name="Demographics" remarks="Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis." type="xml"/>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_Person_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_Person_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-18">
+        <createIndex indexName="AK_Person_rowguid" tableName="Person" unique="true">
+            <column defaultValueComputed="newid()" defaultValueConstraintName="DF_Person_rowguid" name="rowguid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-19">
+        <createIndex indexName="IX_Person_LastName_FirstName_MiddleName" tableName="Person">
+            <column name="LastName"/>
+            <column name="FirstName"/>
+            <column name="MiddleName"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-46">
+        <addForeignKeyConstraint baseColumnNames="BusinessEntityID" baseTableName="Person" constraintName="FK_Person_BusinessEntity_BusinessEntityID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="BusinessEntityID" referencedTableName="BusinessEntity" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

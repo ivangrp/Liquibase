@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-5">
+        <createTable remarks="Cross-reference table mapping customers, vendors, and employees to their addresses." tableName="BusinessEntityAddress">
+            <column computed="false" name="BusinessEntityID" remarks="Primary key. Foreign key to BusinessEntity.BusinessEntityID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BusinessEntityAddress_BusinessEntityID_AddressID_AddressTypeID"/>
+            </column>
+            <column computed="false" name="AddressID" remarks="Primary key. Foreign key to Address.AddressID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BusinessEntityAddress_BusinessEntityID_AddressID_AddressTypeID"/>
+            </column>
+            <column computed="false" name="AddressTypeID" remarks="Primary key. Foreign key to AddressType.AddressTypeID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BusinessEntityAddress_BusinessEntityID_AddressID_AddressTypeID"/>
+            </column>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_BusinessEntityAddress_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_BusinessEntityAddress_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-24">
+        <createIndex indexName="AK_BusinessEntityAddress_rowguid" tableName="BusinessEntityAddress" unique="true">
+            <column defaultValueComputed="newid()" defaultValueConstraintName="DF_BusinessEntityAddress_rowguid" name="rowguid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-25">
+        <addForeignKeyConstraint baseColumnNames="AddressID" baseTableName="BusinessEntityAddress" constraintName="FK_BusinessEntityAddress_Address_AddressID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="AddressID" referencedTableName="Address" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-26">
+        <createIndex indexName="IX_BusinessEntityAddress_AddressID" tableName="BusinessEntityAddress">
+            <column name="AddressID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-27">
+        <createIndex indexName="IX_BusinessEntityAddress_AddressTypeID" tableName="BusinessEntityAddress">
+            <column name="AddressTypeID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-48">
+        <addForeignKeyConstraint baseColumnNames="AddressTypeID" baseTableName="BusinessEntityAddress" constraintName="FK_BusinessEntityAddress_AddressType_AddressTypeID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="AddressTypeID" referencedTableName="AddressType" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+    
+    <changeSet author="ivangrp (generated)" id="1724777700737-49">
+        <addForeignKeyConstraint baseColumnNames="BusinessEntityID" baseTableName="BusinessEntityAddress" constraintName="FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="BusinessEntityID" referencedTableName="BusinessEntity" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

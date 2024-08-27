@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-7">
+        <createTable remarks="Where to send a person email." tableName="EmailAddress">
+            <column computed="false" name="BusinessEntityID" remarks="Primary key. Person associated with this email address.  Foreign key to Person.BusinessEntityID" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EmailAddress_BusinessEntityID_EmailAddressID"/>
+            </column>
+            <column autoIncrement="true" computed="false" name="EmailAddressID" remarks="Primary key. ID of this email address." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EmailAddress_BusinessEntityID_EmailAddressID"/>
+            </column>
+            <column computed="false" name="EmailAddress" remarks="E-mail address for the person." type="nvarchar(50)"/>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_EmailAddress_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_EmailAddress_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-30">
+        <addForeignKeyConstraint baseColumnNames="BusinessEntityID" baseTableName="EmailAddress" constraintName="FK_EmailAddress_Person_BusinessEntityID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="BusinessEntityID" referencedTableName="Person" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+    
+    <changeSet author="ivangrp (generated)" id="1724777700737-31">
+        <createIndex indexName="IX_EmailAddress_EmailAddress" tableName="EmailAddress">
+            <column name="EmailAddress"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

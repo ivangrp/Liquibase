@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-1">
+        <createTable remarks="Cross-reference table mapping stores, vendors, and employees to people" tableName="BusinessEntityContact">
+            <column computed="false" name="BusinessEntityID" remarks="Primary key. Foreign key to BusinessEntity.BusinessEntityID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID"/>
+            </column>
+            <column computed="false" name="PersonID" remarks="Primary key. Foreign key to Person.BusinessEntityID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID"/>
+            </column>
+            <column computed="false" name="ContactTypeID" remarks="Primary key.  Foreign key to ContactType.ContactTypeID." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID"/>
+            </column>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_BusinessEntityContact_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_BusinessEntityContact_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-14">
+        <createIndex indexName="AK_BusinessEntityContact_rowguid" tableName="BusinessEntityContact" unique="true">
+            <column defaultValueComputed="newid()" defaultValueConstraintName="DF_BusinessEntityContact_rowguid" name="rowguid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-15">
+        <createIndex indexName="IX_BusinessEntityContact_ContactTypeID" tableName="BusinessEntityContact">
+            <column name="ContactTypeID"/>
+        </createIndex>
+    </changeSet>
+    
+    <changeSet author="ivangrp (generated)" id="1724777700737-16">
+        <createIndex indexName="IX_BusinessEntityContact_PersonID" tableName="BusinessEntityContact">
+            <column name="PersonID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-43">
+        <addForeignKeyConstraint baseColumnNames="BusinessEntityID" baseTableName="BusinessEntityContact" constraintName="FK_BusinessEntityContact_BusinessEntity_BusinessEntityID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="BusinessEntityID" referencedTableName="BusinessEntity" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+    
+    <changeSet author="ivangrp (generated)" id="1724777700737-44">
+        <addForeignKeyConstraint baseColumnNames="ContactTypeID" baseTableName="BusinessEntityContact" constraintName="FK_BusinessEntityContact_ContactType_ContactTypeID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ContactTypeID" referencedTableName="ContactType" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+    
+    <changeSet author="ivangrp (generated)" id="1724777700737-45">
+        <addForeignKeyConstraint baseColumnNames="PersonID" baseTableName="BusinessEntityContact" constraintName="FK_BusinessEntityContact_Person_PersonID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="BusinessEntityID" referencedTableName="Person" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

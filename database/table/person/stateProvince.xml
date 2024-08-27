@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-10">
+        <createTable remarks="State and province lookup table." tableName="StateProvince">
+            <column autoIncrement="true" computed="false" name="StateProvinceID" remarks="Primary key for StateProvince records." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_StateProvince_StateProvinceID"/>
+            </column>
+            <column computed="false" name="StateProvinceCode" remarks="ISO standard state or province code." type="nchar(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="CountryRegionCode" remarks="ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode." type="nvarchar(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="1" defaultValueConstraintName="DF_StateProvince_IsOnlyStateProvinceFlag" name="IsOnlyStateProvinceFlag" remarks="0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode." type="Flag(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Name" remarks="State or province description." type="Name">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="TerritoryID" remarks="ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID." type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_StateProvince_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_StateProvince_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-34">
+        <createIndex indexName="AK_StateProvince_Name" tableName="StateProvince" unique="true">
+            <column name="Name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-35">
+        <createIndex indexName="AK_StateProvince_rowguid" tableName="StateProvince" unique="true">
+            <column defaultValueComputed="newid()" defaultValueConstraintName="DF_StateProvince_rowguid" name="rowguid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-36">
+        <createIndex indexName="AK_StateProvince_StateProvinceCode_CountryRegionCode" tableName="StateProvince" unique="true">
+            <column name="StateProvinceCode"/>
+            <column name="CountryRegionCode"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-37">
+        <addForeignKeyConstraint baseColumnNames="CountryRegionCode" baseTableName="StateProvince" constraintName="FK_StateProvince_CountryRegion_CountryRegionCode" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="CountryRegionCode" referencedTableName="CountryRegion" referencedTableSchemaName="Person" validate="true"/>
+    </changeSet>
+    
+    <changeSet author="ivangrp (generated)" id="1724777700737-38">
+        <addForeignKeyConstraint baseColumnNames="TerritoryID" baseTableName="StateProvince" constraintName="FK_StateProvince_SalesTerritory_TerritoryID" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="TerritoryID" referencedTableName="SalesTerritory" referencedTableSchemaName="SALES" validate="true"/>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-50">
+        <createIndex clustered="true" indexName="IX_vStateProvinceCountryRegion" tableName="vStateProvinceCountryRegion" unique="true">
+            <column name="StateProvinceID"/>
+            <column name="CountryRegionCode"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

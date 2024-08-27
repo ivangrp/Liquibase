@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-11">
+        <createTable remarks="Types of addresses stored in the Address table." tableName="AddressType">
+            <column autoIncrement="true" computed="false" name="AddressTypeID" remarks="Primary key for AddressType records." type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_AddressType_AddressTypeID"/>
+            </column>
+            <column computed="false" name="Name" remarks="Address type description. For example, Billing, Home, or Shipping." type="Name">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="newid()" defaultValueConstraintName="DF_AddressType_rowguid" name="rowguid" remarks="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." type="uniqueidentifier">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_AddressType_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-39">
+        <createIndex indexName="AK_AddressType_Name" tableName="AddressType" unique="true">
+            <column name="Name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-40">
+        <createIndex indexName="AK_AddressType_rowguid" tableName="AddressType" unique="true">
+            <column defaultValueComputed="newid()" defaultValueConstraintName="DF_AddressType_rowguid" name="rowguid"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-6">
+        <createTable remarks="Lookup table containing the ISO standard codes for countries and regions." tableName="CountryRegion">
+            <column computed="false" name="CountryRegionCode" remarks="ISO standard code for countries and regions." type="nvarchar(3)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CountryRegion_CountryRegionCode"/>
+            </column>
+            <column computed="false" name="Name" remarks="Country or region name." type="Name">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="getdate()" defaultValueConstraintName="DF_CountryRegion_ModifiedDate" name="ModifiedDate" remarks="Date and time the record was last updated." type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ivangrp (generated)" id="1724777700737-28">
+        <createIndex indexName="AK_CountryRegion_Name" tableName="CountryRegion" unique="true">
+            <column name="Name"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
